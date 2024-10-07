@@ -1,4 +1,4 @@
-remote: [true/false]
+remote: true
 
 experienceLevel:
  internship: false

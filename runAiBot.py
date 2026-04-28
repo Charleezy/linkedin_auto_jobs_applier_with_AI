@@ -473,6 +473,8 @@ def answer_questions(modal: WebElement, questions_list: set, work_location: str,
                     answer = gender
                 elif 'disability' in label: 
                     answer = disability_status
+                elif 'ethnicity' in label or 'race' in label:
+                    answer = ethnicity
                 elif 'proficiency' in label: 
                     answer = 'Professional'
                 # Add location handling
@@ -552,6 +554,8 @@ def answer_questions(modal: WebElement, questions_list: set, work_location: str,
                 elif 'veteran' in label or 'protected' in label: answer = veteran_status
                 elif 'disability' in label or 'handicapped' in label: 
                     answer = disability_status
+                elif 'ethnicity' in label or 'race' in label:
+                    answer = ethnicity
                 else: answer = answer_common_questions(label,answer)
                 foundOption = try_xp(radio, f".//label[normalize-space()='{answer}']", False)
                 if foundOption: 
@@ -592,6 +596,7 @@ def answer_questions(modal: WebElement, questions_list: set, work_location: str,
             label_org = label.text if label else "Unknown"
             answer = "" # years_of_experience
             label = label_org.lower()
+            intentionally_empty_text = False
 
             prev_answer = text.get_attribute("value")
             if not prev_answer or overwrite_previous_answers:
@@ -603,7 +608,10 @@ def answer_questions(modal: WebElement, questions_list: set, work_location: str,
                     do_actions = True
                 elif 'signature' in label: answer = full_name # 'signature' in label or 'legal name' in label or 'your name' in label or 'full name' in label: answer = full_name     # What if question is 'name of the city or university you attend, name of referral etc?'
                 elif 'name' in label:
-                    if 'full' in label: answer = full_name
+                    if any(w in label for w in ('reference', 'referrer', 'referee')):
+                        answer = reference_contact_answer
+                        intentionally_empty_text = reference_contact_answer == ""
+                    elif 'full' in label: answer = full_name
                     elif 'first' in label and 'last' not in label: answer = first_name
                     elif 'middle' in label and 'last' not in label: answer = middle_name
                     elif 'last' in label and 'first' not in label: answer = last_name
@@ -640,7 +648,7 @@ def answer_questions(modal: WebElement, questions_list: set, work_location: str,
                 elif 'country' in label: answer = country
                 else: answer = answer_common_questions(label,answer)
                 ##> ------ Yang Li : MARKYangL - Feature ------
-                if answer == "":
+                if answer == "" and not intentionally_empty_text:
                     if use_AI and aiClient:
                         try:
                             if ai_provider.lower() == "openai":

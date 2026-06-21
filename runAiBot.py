@@ -21,6 +21,7 @@ import csv
 import re
 import time
 import pyautogui
+import tkinter as tk
 
 # Set CSV field size limit to prevent field size errors
 csv.field_size_limit(1000000)  # Set to 1MB instead of default 131KB
@@ -871,6 +872,42 @@ def discard_job() -> None:
 
 
 
+def pause_before_submit_dialog(message: str, title: str) -> str:
+    """Custom dialog with Submit Application as the default focused button."""
+    result = [None]
+
+    root = tk.Tk()
+    root.title(title)
+    root.resizable(False, False)
+    root.attributes("-topmost", True)
+
+    tk.Label(root, text=message, justify="left", padx=20, pady=20, wraplength=400).pack()
+
+    btn_frame = tk.Frame(root, pady=10)
+    btn_frame.pack()
+
+    def choose(value):
+        result[0] = value
+        root.destroy()
+
+    tk.Button(btn_frame, text="Disable Pause",       width=16, command=lambda: choose("Disable Pause")).pack(side="left", padx=5)
+    tk.Button(btn_frame, text="Discard Application", width=18, command=lambda: choose("Discard Application")).pack(side="left", padx=5)
+    submit_btn = tk.Button(btn_frame, text="Submit Application", width=18, command=lambda: choose("Submit Application"))
+    submit_btn.pack(side="left", padx=5)
+
+    root.bind("<Return>", lambda e: choose("Submit Application"))
+    root.bind("<space>",  lambda e: choose("Submit Application"))
+    submit_btn.focus_set()
+
+    root.update_idletasks()
+    w, h = root.winfo_width(), root.winfo_height()
+    sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
+    root.geometry(f"{w}x{h}+{(sw-w)//2}+{(sh-h)//2}")
+
+    root.mainloop()
+    return result[0]
+
+
 # Function to apply to jobs
 def apply_to_jobs(search_terms: list[str]) -> None:
     applied_jobs = get_applied_job_ids()
@@ -1088,7 +1125,7 @@ def apply_to_jobs(search_terms: list[str]) -> None:
                                 wait_span_click(driver, "Review", 1, scrollTop=True)
                                 cur_pause_before_submit = pause_before_submit
                                 if errored != "stuck" and cur_pause_before_submit:
-                                    decision = pyautogui.confirm('1. Please verify your information.\n2. If you edited something, please return to this final screen.\n3. DO NOT CLICK "Submit Application".\n\n\n\n\nYou can turn off "Pause before submit" setting in config.py\nTo TEMPORARILY disable pausing, click "Disable Pause"', "Confirm your information",["Disable Pause", "Discard Application", "Submit Application"])
+                                    decision = pause_before_submit_dialog('1. Please verify your information.\n2. If you edited something, please return to this final screen.\n3. DO NOT CLICK "Submit Application".\n\n\n\nYou can turn off "Pause before submit" setting in config.py\nTo TEMPORARILY disable pausing, click "Disable Pause"', "Confirm your information")
                                     if decision == "Discard Application": raise Exception("Job application discarded by user!")
                                     pause_before_submit = False if "Disable Pause" == decision else True
                                     # try_xp(modal, ".//span[normalize-space(.)='Review']")

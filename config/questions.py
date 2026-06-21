@@ -84,12 +84,11 @@ then it will divide by 30 or 7 and answer respectively. Examples:
 '''
 
 # Your LinkedIn headline in quotes Eg: "Software Engineer @ Google, Masters in Computer Science", "Recent Grad Student @ MIT, Computer Science"
-linkedin_headline = "Full Stack Developer with Masters in Computer Science and 4+ years of experience" # "Headline" or "" to leave this question unanswered
+linkedin_headline = "Backend Java/C# Developer with Bachelors in Computer Engineering and 4+ years of experience" # "Headline" or "" to leave this question unanswered
 
 # Your summary in quotes, use \n to add line breaks if using single quotes "Summary".You can skip \n if using triple quotes """Summary"""
 linkedin_summary = """
-I'm a Senior Software Engineer at Amazon with Masters in CS and 4+ years of experience in developing and maintaining Full Stack Web applications and cloud solutions. 
-Specialized in React, Node.js, and Python.
+I'm a Senior Software Engineer with 9+ years of experience in developing and maintaining Full Stack Web applications and cloud solutions with Java and C# ASP.NET.
 """
 
 '''
@@ -98,7 +97,7 @@ Note: If left empty as "", the tool will not answer the question. However, note 
 
 # Your cover letter in quotes, use \n to add line breaks if using single quotes "Cover Letter".You can skip \n if using triple quotes """Cover Letter""" (This question makes sense though)
 cover_letter = """
-Cover Letter
+Hi. I'm interested in this position. Most of my roles in the past have been on backend software development, I have around 9 years of experience after graduating from the University of Toronto in 2014 with a bachelor's degree in computer engineering. Mostly with Java spring or ASP.net and I'm AWS certified but also strong with Azure and have used both since 2016. I'm in Boston, looking for 100k/annum salary. I have a GC
 """
 ##> ------ Dheeraj Deshwal : dheeraj9811 Email:dheeraj20194@iiitd.ac.in/dheerajdeshwal9811@gmail.com - Feature ------
 
@@ -143,8 +142,6 @@ Note: Will be treated as False if `run_in_background = True`
 
 # Do you want to overwrite previous answers?
 overwrite_previous_answers = False # True or False, Note: True or False are case-sensitive
-
-
 
 
 

@@ -19,8 +19,8 @@ version:    24.12.3.10.30
 
 
 # Login Credentials for LinkedIn (Optional)
-username = "username@example.com"       # Enter your username in the quotes
-password = "example_password"           # Enter your password in the quotes
+username = "charleezyguan@gmail.com"       # Enter your username in the quotes
+password = "hadriel1"           # Enter your password in the quotes
 
 
 ## Artificial Intelligence (Beta Not-Recommended)
@@ -48,8 +48,6 @@ Note: Select your AI provider.
 * "gemini" - Google Gemini API (Gemini models)
 * For any other models, keep it as "openai" if it is compatible with OpenAI's api.
 '''
-
-
 
 # Your LLM url or other AI api url and port
 llm_api_url = "https://api.openai.com/v1/"       # Examples: "https://api.openai.com/v1/", "http://127.0.0.1:1234/v1/", "http://localhost:1234/v1/", "https://api.deepseek.com", "https://api.deepseek.com/v1"

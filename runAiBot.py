@@ -473,8 +473,6 @@ def answer_questions(modal: WebElement, questions_list: set, work_location: str,
                     answer = gender
                 elif 'disability' in label: 
                     answer = disability_status
-                elif 'ethnicity' in label or 'race' in label:
-                    answer = ethnicity
                 elif 'proficiency' in label: 
                     answer = 'Professional'
                 # Add location handling
@@ -596,7 +594,6 @@ def answer_questions(modal: WebElement, questions_list: set, work_location: str,
             label_org = label.text if label else "Unknown"
             answer = "" # years_of_experience
             label = label_org.lower()
-            intentionally_empty_text = False
 
             prev_answer = text.get_attribute("value")
             if not prev_answer or overwrite_previous_answers:

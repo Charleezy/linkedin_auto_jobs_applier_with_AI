@@ -39,6 +39,7 @@ def createChromeSession(isRetry: bool = False):
     profile_dir = find_default_profile_directory()
     if isRetry:
         print_lg("Will login with a guest profile, browsing history will not be saved in the browser!")
+        options.add_argument(f"--user-data-dir={get_default_temp_profile()}")
     elif profile_dir and not safe_mode:
         options.add_argument(f"--user-data-dir={profile_dir}")
     else:
